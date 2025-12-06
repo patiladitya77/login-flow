@@ -1,16 +1,41 @@
-# React + Vite
+# overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is simple application demonstrating the login/signup and logout functionality using firebase
+It also has n8n workflow which gets triggered after every new signup
+Live url:- https://login-flow-bice.vercel.app/
 
-Currently, two official plugins are available:
+# how to run this locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+run:- git clone https://github.com/patiladitya77/login-flow.git
+open the folder in code editor
+run:- npm install
+run:- npm run dev
 
-## React Compiler
+# setting up environment variables
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+For firebase key:-
+login to firebase and create new project and get the API key for auth
 
-## Expanding the ESLint configuration
+For n8n key:-
+login to n8n
+create a new workflow
+create new web-hook
+web hook configs:-
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+    http method: post
+    path: signup-welcome
+
+get the production url and use it as VITE_N8N_URL
+
+create new node: email
+link the email node with webhook
+open the gmail node
+connect with your gmail
+select resource: message
+operation:send
+to:{{$json.body.email}}
+subject: Welcome, {{$json.body.name}}!
+message: Hi {{$json.body.name}},<br><br> Thank you for signing up to our website!<br> We’re happy to have you here.<br><br>
+save the workflow
+
+And your workflow is ready!!
